@@ -9,4 +9,5 @@
                  [org.clojure/data.json "0.2.6"]]
   :main ^:skip-aot audio-file-indexer.core
   :target-path "target/%s"
-  :profiles {:uberjar {:aot :all}})
+  :profiles {:uberjar {:aot :all}
+             :test {:resource-paths ["test/resources"]}})

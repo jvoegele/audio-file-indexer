@@ -37,8 +37,8 @@
 
 (defn- keyed-seq->map [in-seq out-map key-map]
   (let [map-keys (fn [pair]
-                    (let [key (first pair) val (second pair)]
-                      [(key-map key) val]))
+                   (let [key (first pair) val (second pair)]
+                     [(key-map key) val]))
         entries (map map-keys (partition 2 in-seq))]
     (reduce
       (fn [acc e] (assoc-append acc (first e) (second e)))
@@ -106,12 +106,13 @@
 
 (defn- tag->map [tag]
   (delete-troublesome-fields! tag)
-  (->> {}
-       (extract-tipl! tag)
-       (extract-tmcl! tag)
-       (extract-txxx-fields! tag)
-       (extract-common-fields! tag)
-       (extract-remaining-fields! tag)))
+  (into (sorted-map)
+        (->> {}
+             (extract-tipl! tag)
+             (extract-tmcl! tag)
+             (extract-txxx-fields! tag)
+             (extract-common-fields! tag)
+             (extract-remaining-fields! tag))))
 
 (defn- read-tag [audio-file]
   (.getTag (AudioFileIO/read (clojure.java.io/file audio-file))))
